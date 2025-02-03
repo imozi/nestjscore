@@ -1,0 +1,13 @@
+enum Genders {
+  male
+  female
+}
+
+model Gender {
+  id          String  @id @default(uuid()) @db.Uuid
+  name        Genders @unique
+  description String  @db.VarChar(100)
+  users       User[]  @relation(name: "gender_to_user")
+
+  @@map("genders")
+}

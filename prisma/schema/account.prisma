@@ -1,0 +1,15 @@
+model Account {
+  id        String    @id @default(uuid()) @db.Uuid
+  email     String    @unique @db.VarChar(100)
+  shortcut  String    @unique @db.VarChar(100)
+  hash      String
+  roles     Role[]    @relation(name: "account_to_role")
+  sessions  Session?  @relation(name: "account_to_sessions")
+  user      User?     @relation(name: "account_to_user")
+  settings  Settings? @relation(name: "account_to_settings")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  @@index([email, shortcut])
+  @@map("accounts")
+}

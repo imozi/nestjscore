@@ -1,0 +1,13 @@
+model SessionToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  sessions  Session? @relation(name: "sessions_to_session_token", fields: [sessionId], references: [id], onDelete: Cascade)
+  sessionId String?  @db.Uuid
+  deviceId  String   @unique @map("device_id") @db.Uuid
+  hash      String
+  meta      Json     @db.JsonB
+  expiresAt DateTime @map("expires_at") @db.Timestamp()
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([sessionId, deviceId])
+  @@map("session_tokens")
+}

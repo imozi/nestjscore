@@ -1,0 +1,18 @@
+model User {
+  id         String    @id @default(uuid()) @db.Uuid
+  account    Account?  @relation(name: "account_to_user", fields: [accountId], references: [id], onDelete: Cascade)
+  accountId  String?   @unique @map("account_id") @db.Uuid
+  name       String?   @db.VarChar(100)
+  surname    String?   @db.VarChar(100)
+  patronymic String?   @db.VarChar(100)
+  fullName   String?   @map("full_name") @db.VarChar(200)
+  age        Int?      @db.Integer
+  gender     Gender?   @relation(name: "gender_to_user", fields: [genderId], references: [id])
+  genderId   String?   @map("gender_id") @db.Uuid
+  birthday   DateTime? @db.Date
+  avatar     String?   @default("/public/default/default-avatar.svg")
+  createdAt  DateTime? @default(now()) @map("created_at")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+
+  @@map("users")
+}

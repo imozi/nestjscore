@@ -1,0 +1,14 @@
+enum Roles {
+  user
+  manager
+  admin
+}
+
+model Role {
+  id          String    @id @default(uuid()) @db.Uuid
+  name        Roles     @unique
+  description String    @db.VarChar(100)
+  accounts    Account[] @relation(name: "account_to_role")
+
+  @@map("roles")
+}
